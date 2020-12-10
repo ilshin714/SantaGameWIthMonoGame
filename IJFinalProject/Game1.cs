@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using IJFinalProject.GameScenes;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
@@ -11,27 +12,19 @@ namespace IJFinalProject
     
     public class Game1 : Game
     {
-        private GraphicsDeviceManager graphics;
-        private SpriteBatch spriteBatch;
-        private Santa santa;
-        private Random randomPosition = new Random();
-        private int delayCounter = 0;
-        private int delay = 300;
-        private Present present;
-        private int positionX ;
-        private int positionY;
-        private Vector2 presentPosition;
-        private int presentSpeed = 4;
-        private Texture2D presentTexture;
-        private Song gettingSound;
-        Vector2 stage;
+        public GraphicsDeviceManager graphics;
+        SpriteBatch spriteBatch;
+
+        //declare all scene references 
+        private ActionScene actionScene;
+        private MenuScene menuScene;
+        private HelpScene helpScene;
+        private HighScoreScene highScoreScene;
+        private AboutScene aboutScene;
 
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
-            graphics.PreferredBackBufferWidth = 1920;
-            graphics.PreferredBackBufferHeight = 1080;
-            IsMouseVisible = true;
             Content.RootDirectory = "Content";
         }
 
@@ -44,7 +37,17 @@ namespace IJFinalProject
         protected override void Initialize()
         {
             // TODO: Add your initialization logic here
+            
+            
             base.Initialize();
+        }
+
+        private void hideAllScenes()
+        {
+            foreach (GameScene item in Components)
+            {
+                item.hide();
+            }
         }
 
         /// <summary>
@@ -53,60 +56,26 @@ namespace IJFinalProject
         /// </summary>
         protected override void LoadContent()
         {
+            graphics.PreferredBackBufferWidth = 1920;
+            graphics.PreferredBackBufferHeight = 1080;
+            Shared.stage = new Vector2(graphics.PreferredBackBufferWidth, graphics.PreferredBackBufferHeight);
+
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
             // TODO: use this.Content to load your game content here
-            //Background
-            Texture2D level1 = this.Content.Load<Texture2D>("Images/BG_02");
-            Texture2D level2 = this.Content.Load<Texture2D>("Images/BG_03");
-            Texture2D startImage = this.Content.Load<Texture2D>("Images/startImage");
-            Texture2D village = this.Content.Load<Texture2D>("Images/houses3");
-            stage = new Vector2(graphics.PreferredBackBufferWidth, graphics.PreferredBackBufferHeight);
-            Rectangle srcRec = new Rectangle(0, 0, level1.Width, level1.Height) ;
-            Vector2 pos = new Vector2(0, 0);
-            Vector2 speed = new Vector2(2, 0);
+            menuScene = new MenuScene(this, spriteBatch);
+            this.Components.Add(menuScene);
 
-            //SoundEffect menuMusic = this.Content.Load<SoundEffect>("Sounds/JazzJingleBell");
-            //SoundEffect level1Music = this.Content.Load<SoundEffect>("Sounds/Jingle-Bell-Rock-Bobby-Helms");
-           
-            Song menuMusic = this.Content.Load<Song>("Sounds/JazzJingleBell");
-            Song level1Music = this.Content.Load<Song>("Sounds/Jingle-Bell-Rock-Bobby-Helms");
-            Song level2Music = this.Content.Load<Song>("Sounds/Rudolph-The-Red-Nosed-Reindeer-Gene-Autry");
-            MediaPlayer.IsRepeating = true;
-            ScrollingBackground scrollingBackground = new ScrollingBackground(this, spriteBatch, level2, pos, srcRec, speed);
-            ScrollingBackground houses = new ScrollingBackground(this, spriteBatch, village, pos, srcRec, speed);
-            this.Components.Add(scrollingBackground);
-            this.Components.Add(houses);
-            
-            //Santa 
-            //Texture2D santaTexture = Content.Load<Texture2D>("Images/modify_Santa_with_sledgh");
-            Texture2D santaTextureBig = Content.Load<Texture2D>("Images/santaBig2");
-            SoundEffect santaVoice = this.Content.Load<SoundEffect>("Sounds/SantaVoice");
-            Vector2 santaInitialPosition = new Vector2(0, stage.Y / 2);
-            Vector2 santaSpeed = new Vector2(4, 4);
-            int santaDelay = 3;
-            santa = new Santa(this, spriteBatch, santaTextureBig, santaInitialPosition, santaDelay, santaSpeed, stage, santaVoice);
-            this.Components.Add(santa);
-            MediaPlayer.Play(level1Music);
+            //other scenes will be here
+            actionScene = new ActionScene(this, spriteBatch);
+            this.Components.Add(actionScene);
 
-            //CandyCane 
-            Texture2D candyCaneTexture = this.Content.Load<Texture2D>("Images/candyCane1");          
-            Vector2 candyCanePosition = new Vector2(stage.X, randomPosition.Next((int)stage.Y));
+            helpScene = new HelpScene(this, spriteBatch);
+            this.Components.Add(helpScene);
 
-            //Present 
-            presentTexture = this.Content.Load<Texture2D>("Images/present2");
-            Texture2D present2 = this.Content.Load<Texture2D>("Images/present3");
-            Texture2D present3 = this.Content.Load<Texture2D>("Images/present4");
-            gettingSound = this.Content.Load<Song>("Sounds/zapsplat_foley_present_gift_wrapped_pick_up_grab_001_42924");
-            positionX = graphics.PreferredBackBufferWidth ;
-            Random random = new Random();
-
-            positionY = random.Next(0, graphics.PreferredBackBufferHeight - presentTexture.Height);
-            presentPosition = new Vector2(positionX, positionY);
-
-            present = new Present(this, spriteBatch, presentTexture, presentPosition, new Vector2(presentSpeed, 0), stage );
-            this.Components.Add(present);
+            //show only startScene
+            menuScene.show();
         }
 
         /// <summary>
@@ -129,17 +98,48 @@ namespace IJFinalProject
                 Exit();
 
             // TODO: Add your update logic here
-            delayCounter++;
-            if (delayCounter > delay)
-            {
-                positionX = graphics.PreferredBackBufferWidth;
-                Random random = new Random();
+            int selectedIndex = 0;
+            KeyboardState ks = Keyboard.GetState();
 
-                positionY = random.Next(0, graphics.PreferredBackBufferHeight - presentTexture.Height);
-                presentPosition = new Vector2(positionX, positionY);
-                present = new Present(this, spriteBatch, presentTexture, presentPosition, new Vector2(presentSpeed, 0), stage);
-                this.Components.Add(present);
-                delayCounter = 0;
+            if (menuScene.Enabled)
+            {
+                selectedIndex = menuScene.Menu.SelectedIndex;
+                if (selectedIndex == 0 && ks.IsKeyDown(Keys.Enter))
+                {
+                    hideAllScenes();
+                    //or startScene.hide();
+                    actionScene.show();
+                }
+                if (selectedIndex == 1 && ks.IsKeyDown(Keys.Enter))
+                {
+                    hideAllScenes();
+                    //or startScene.hide();
+                    helpScene.show();
+                }
+
+                if (selectedIndex == 4 && ks.IsKeyDown(Keys.Enter))
+                {
+                    this.Exit();
+                }
+            }
+            if (helpScene.Enabled)
+            {
+                if (ks.IsKeyDown(Keys.Escape))
+                {
+                    hideAllScenes();
+                    //or helpScene.hide();
+                    menuScene.show();
+                }
+
+            }
+            if (actionScene.Enabled)
+            {
+                if (ks.IsKeyDown(Keys.Escape))
+                {
+                    hideAllScenes();
+                    //or actionScene.hide();
+                    menuScene.show();
+                }
             }
             base.Update(gameTime);
         }
