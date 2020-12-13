@@ -121,11 +121,11 @@ namespace IJFinalProject.GameScenes
             SpriteFont scoreFont = game.Content.Load<SpriteFont>("Fonts/HighlightFont");
             score = new Score(game, spriteBatch, scoreFont, new Vector2(stage.X - 200, 50), 0, Color.RosyBrown);
             this.Components.Add(score);
-            GameString point = new GameString(game, spriteBatch, scoreFont, "Score Here: ", new Vector2(stage.X-500, 50), Color.RosyBrown);
+            GameString point = new GameString(game, spriteBatch, scoreFont, "Score Here: ", new Vector2(stage.X-500, 50), Color.OrangeRed);
             this.Components.Add(point);
             //status
             status = game.Content.Load<SpriteFont>("Fonts/Status");
-            GameString start = new GameString(game, spriteBatch, status, "LEVEL 1 START", new Vector2(stage.X /5, stage.Y / 3), Color.IndianRed);
+            GameString start = new GameString(game, spriteBatch, status, "LEVEL 1 START", new Vector2(stage.X /5, stage.Y / 3), Color.OrangeRed);
 
             this.Components.Add(start);
 
@@ -173,7 +173,6 @@ namespace IJFinalProject.GameScenes
 
                 positionY = random.Next(0, (int)Shared.stage.Y - presentList.ElementAt(presentIndex).Height);
                 presentPosition = new Vector2(positionX, positionY);
-                //present = new Present(game, spriteBatch, presents[presentIndex], presentPosition, new Vector2(presentSpeed, 0), stage, effect);
                 present = new Present(game, spriteBatch, presentList.ElementAt(presentIndex), presentPosition, new Vector2(presentSpeed, 0), stage, effect);
                 this.Components.Add(present);
                 delayCounter = 0;
@@ -195,7 +194,7 @@ namespace IJFinalProject.GameScenes
                 {
                     Song level2Music = game.Content.Load<Song>("Sounds/Rudolph-The-Red-Nosed-Reindeer-Gene-Autry");
                     MediaPlayer.Play(level2Music);
-                    GameString levelUp = new GameString(game, spriteBatch, status, "LEVEL 2 START", new Vector2(stage.X / 5, stage.Y / 3), Color.IndianRed);
+                    GameString levelUp = new GameString(game, spriteBatch, status, "LEVEL 2 START", new Vector2(stage.X / 5, stage.Y / 3), Color.OrangeRed);
                     this.Components.Add(levelUp);
                     isMusicChanged = true;
                 }
@@ -219,7 +218,7 @@ namespace IJFinalProject.GameScenes
                 santa.Enabled = false;
                 presentSpeed = 0;
                 
-                GameString gameOver = new GameString(game, spriteBatch, status, "Game Over \nPlease press ESC", new Vector2(stage.X / 5, stage.Y / 3), Color.IndianRed);
+                GameString gameOver = new GameString(game, spriteBatch, status, "Game Over \nPlease press ESC", new Vector2(stage.X / 5, stage.Y / 3), Color.OrangeRed);
                 this.Components.Add(gameOver);
             }
             base.Update(gameTime);

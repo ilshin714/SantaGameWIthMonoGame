@@ -41,26 +41,24 @@
     <ApplicationManifest>app.manifest</ApplicationManifest>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="CandyCane.cs" />
-    <Compile Include="CollisionManager.cs" />
+    <Compile Include="Components\CandyCane.cs" />
+    <Compile Include="Components\CollisionManager.cs" />
     <Compile Include="Game1.cs" />
-    <Compile Include="GameScene.cs" />
+    <Compile Include="GameScenes\GameScene.cs" />
     <Compile Include="GameScenes\AboutScene.cs" />
     <Compile Include="GameScenes\ActionScene.cs" />
     <Compile Include="GameScenes\HelpScene.cs" />
     <Compile Include="GameScenes\HighScoreScene.cs" />
     <Compile Include="GameScenes\MenuScene.cs" />
-    <Compile Include="MenuComponent.cs" />
-    <Compile Include="Present.cs" />
+    <Compile Include="Components\MenuComponent.cs" />
+    <Compile Include="Components\Present.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Santa.cs" />
-    <Compile Include="Score.cs" />
-    <Compile Include="ScrollingBackground.cs" />
+    <Compile Include="Components\Santa.cs" />
+    <Compile Include="Components\Score.cs" />
+    <Compile Include="Components\ScrollingBackground.cs" />
     <Compile Include="Shared.cs" />
-    <Compile Include="GameString.cs" />
-    <Compile Include="SuccessEffect.cs" />
-    <Compile Include="Trap.cs" />
+    <Compile Include="Components\GameString.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="MonoGame.Framework">

@@ -20,6 +20,7 @@ namespace IJFinalProject
         private SoundEffect faultySound;
         private int delayCounter = 0;
         private int delay = 600;
+        private bool isItGift;
         private bool gotPresent;
         public bool GotPresent { get => gotPresent; set => gotPresent = value; }
         Score score;
@@ -46,6 +47,30 @@ namespace IJFinalProject
             this.actionScene = actionScene;
             this.background = background;
             this.village = village;
+            isItGift = IsItGift();
+        }
+        public bool IsItGift()
+        {
+            switch (present.PresentTexture.Name)
+            {
+
+                case "Images/present1":
+                case "Images/present2":
+                case "Images/present3":
+                case "Images/present4":
+                case "Images/candyCane1":
+                    isItGift = true;
+                    break;
+                case "Images/cane1":
+                case "Images/umbrella1":
+                    isItGift = false;
+                    break;
+                default:
+                    isItGift = false;
+                    break;
+
+            }
+            return isItGift;
         }
 
         public override void Update(GameTime gameTime)
@@ -66,10 +91,12 @@ namespace IJFinalProject
                         case "Images/present4":
                         case "Images/candyCane1":
                             presentSound.Play();
+                            isItGift = true;
                             break;
                         case "Images/cane1":
                         case "Images/umbrella1":
                             faultySound.Play();
+                            isItGift = false;
                             break;
                         default:
                             break;
@@ -86,8 +113,9 @@ namespace IJFinalProject
                 }
                 this.Enabled = false;
             }
-            else if(presentRect.Left < 0)
+            else if(presentRect.Left < 0 && isItGift)
             {
+                faultySound.Play();
                 score.Point -= 50;
                 this.Enabled = false;
             }

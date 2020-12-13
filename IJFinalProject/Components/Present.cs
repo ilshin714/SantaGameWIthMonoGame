@@ -14,6 +14,7 @@ using System.Threading.Tasks;
 using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using IJFinalProject.GameScenes;
 
 namespace IJFinalProject
 {
@@ -135,7 +136,6 @@ namespace IJFinalProject
                 spriteBatch.Draw(effect, presentPositionOri, frames[frameIndex], Color.White);
             }
             
-
             spriteBatch.End();
 
             base.Draw(gameTime);
