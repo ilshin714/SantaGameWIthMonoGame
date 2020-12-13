@@ -133,5 +133,10 @@ namespace IJFinalProject
 
             base.Update(gameTime);
         }
+
+        public Rectangle getBound()
+        {
+            return new Rectangle((int)position.X, (int)position.Y, (int)dimension.X, (int)dimension.Y);
+        }
     }
 }

@@ -14,5 +14,6 @@ namespace IJFinalProject
     public class Shared
     {
         public static Vector2 stage;
+        public static int highScore;
     }
 }

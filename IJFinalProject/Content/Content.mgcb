@@ -63,6 +63,13 @@
 /processorParam:TextureFormat=Compressed
 /build:Fonts/Regular.spritefont
 
+#begin Fonts/Status.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/processorParam:PremultiplyAlpha=True
+/processorParam:TextureFormat=Compressed
+/build:Fonts/Status.spritefont
+
 #begin Images/AboutScene.jpg
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -219,6 +226,18 @@
 /processorParam:TextureFormat=Color
 /build:Images/MenuScene.jpg
 
+#begin Images/present1.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Images/present1.png
+
 #begin Images/present2.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -303,6 +322,12 @@
 /processorParam:TextureFormat=Color
 /build:Images/umbrella1.png
 
+#begin Sounds/gettingSound.Wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sounds/gettingSound.Wav
+
 #begin Sounds/JazzJingleBell.mp3
 /importer:Mp3Importer
 /processor:SongProcessor
@@ -315,6 +340,12 @@
 /processorParam:Quality=Best
 /build:Sounds/Jingle-Bell-Rock-Bobby-Helms.mp3
 
+#begin Sounds/present_pick.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sounds/present_pick.wav
+
 #begin Sounds/Rudolph-The-Red-Nosed-Reindeer-Gene-Autry.mp3
 /importer:Mp3Importer
 /processor:SongProcessor
@@ -326,10 +357,4 @@
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
 /build:Sounds/SantaVoice.mp3
-
-#begin Sounds/zapsplat_foley_present_gift_wrapped_pick_up_grab_001_42924.mp3
-/importer:Mp3Importer
-/processor:SongProcessor
-/processorParam:Quality=Best
-/build:Sounds/zapsplat_foley_present_gift_wrapped_pick_up_grab_001_42924.mp3;Sounds/presentSound.mp3
 

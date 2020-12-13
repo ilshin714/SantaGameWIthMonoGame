@@ -21,10 +21,13 @@ namespace IJFinalProject
         private HelpScene helpScene;
         private HighScoreScene highScoreScene;
         private AboutScene aboutScene;
+        private Song menuMusic;
 
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
+            graphics.PreferredBackBufferWidth = 1920;
+            graphics.PreferredBackBufferHeight = 1080;
             Content.RootDirectory = "Content";
         }
 
@@ -56,10 +59,9 @@ namespace IJFinalProject
         /// </summary>
         protected override void LoadContent()
         {
-            graphics.PreferredBackBufferWidth = 1920;
-            graphics.PreferredBackBufferHeight = 1080;
+            
             Shared.stage = new Vector2(graphics.PreferredBackBufferWidth, graphics.PreferredBackBufferHeight);
-
+            menuMusic = this.Content.Load<Song>("Sounds/JazzJingleBell");
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
@@ -74,8 +76,12 @@ namespace IJFinalProject
             helpScene = new HelpScene(this, spriteBatch);
             this.Components.Add(helpScene);
 
+            aboutScene = new AboutScene(this, spriteBatch);
+            this.Components.Add(aboutScene);
+
             //show only startScene
             menuScene.show();
+            MediaPlayer.Play(menuMusic);
         }
 
         /// <summary>
@@ -94,8 +100,6 @@ namespace IJFinalProject
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Update(GameTime gameTime)
         {
-            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
-                Exit();
 
             // TODO: Add your update logic here
             int selectedIndex = 0;
@@ -107,14 +111,23 @@ namespace IJFinalProject
                 if (selectedIndex == 0 && ks.IsKeyDown(Keys.Enter))
                 {
                     hideAllScenes();
-                    //or startScene.hide();
+                    //other scenes will be here
+                    actionScene = new ActionScene(this, spriteBatch);
+                    this.Components.Add(actionScene);
+                    MediaPlayer.Stop();
                     actionScene.show();
+                    actionScene.StartGame();
                 }
                 if (selectedIndex == 1 && ks.IsKeyDown(Keys.Enter))
                 {
                     hideAllScenes();
-                    //or startScene.hide();
+                    
                     helpScene.show();
+                }
+                if (selectedIndex == 3 && ks.IsKeyDown(Keys.Enter))
+                {
+                    hideAllScenes();
+                    aboutScene.show();
                 }
 
                 if (selectedIndex == 4 && ks.IsKeyDown(Keys.Enter))
@@ -132,13 +145,25 @@ namespace IJFinalProject
                 }
 
             }
-            if (actionScene.Enabled)
+            if (aboutScene.Enabled)
             {
                 if (ks.IsKeyDown(Keys.Escape))
                 {
                     hideAllScenes();
-                    //or actionScene.hide();
+                    //or helpScene.hide();
                     menuScene.show();
+                }
+
+            }
+            if (actionScene.Enabled)
+            {
+                if (ks.IsKeyDown(Keys.Escape))
+                {
+                    actionScene.StopGame();
+                    hideAllScenes();
+                    actionScene.Initialize();
+                    menuScene.show();
+                    MediaPlayer.Play(menuMusic);
                 }
             }
             base.Update(gameTime);

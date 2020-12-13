@@ -10,7 +10,8 @@ using Microsoft.Xna.Framework.Input;
 
 namespace IJFinalProject
 {
-    public class GameScene : DrawableGameComponent
+    public 
+        class GameScene : DrawableGameComponent
     {
         private List<GameComponent> components;
         public List<GameComponent> Components { get => components; set => components = value; }

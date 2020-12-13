@@ -12,6 +12,7 @@ namespace IJFinalProject
     {
         private SpriteBatch spriteBatch;
         private Texture2D tex;
+        public Texture2D Tex { get => tex; set => tex = value; }
         private Rectangle srcRect;
         private Vector2 position1, position2;
         private Vector2 speed;
@@ -29,6 +30,8 @@ namespace IJFinalProject
             this.position2 = new Vector2(position.X + tex.Width, position.Y);
             this.speed = speed;
         }
+
+        
 
         public override void Draw(GameTime gameTime)
         {

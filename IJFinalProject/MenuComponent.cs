@@ -35,7 +35,7 @@ namespace IJFinalProject
             this.regularFont = regularFont;
             this.highlightFont = highlightFont;
             menuItems = menus.ToList<string>();
-            position = new Vector2(Shared.stage.X / 2, Shared.stage.Y / 2);
+            position = new Vector2(Shared.stage.X / 3, Shared.stage.Y / 3);
 
         }
         public override void Draw(GameTime gameTime)
