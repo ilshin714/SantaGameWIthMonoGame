@@ -190,6 +190,18 @@
 /processorParam:TextureFormat=Color
 /build:Images/HighScoreScene.jpg
 
+#begin Images/HighScoreScene.jpg
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Images/HighScoreScene.jpg
+
 #begin Images/houses2.png
 /importer:TextureImporter
 /processor:TextureProcessor

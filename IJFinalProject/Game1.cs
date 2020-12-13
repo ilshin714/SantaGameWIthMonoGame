@@ -1,4 +1,11 @@
-﻿using IJFinalProject.GameScenes;
+﻿/*  Program: IJFinalProject
+ *  Purpose: Game making for final project
+ *  Revision History: 
+ *      Created by Ilshin Ji December 1 2020
+ *      Modified by Ilshin Ji December 13 2020
+ */
+
+using IJFinalProject.GameScenes;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Graphics;
@@ -6,12 +13,17 @@ using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
 using System;
 
-
+/// <summary>
+/// IJFinalProject
+/// </summary>
 namespace IJFinalProject
 {
-    
+    /// <summary>
+    /// Game1 Class start from here
+    /// </summary>
     public class Game1 : Game
     {
+        //Declaring variables 
         public GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
 
@@ -21,8 +33,12 @@ namespace IJFinalProject
         private HelpScene helpScene;
         private HighScoreScene highScoreScene;
         private AboutScene aboutScene;
+        //Menu music variable
         private Song menuMusic;
 
+        /// <summary>
+        /// Contructor here
+        /// </summary>
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
@@ -40,11 +56,12 @@ namespace IJFinalProject
         protected override void Initialize()
         {
             // TODO: Add your initialization logic here
-            
-            
             base.Initialize();
         }
 
+        /// <summary>
+        /// It will hide all scenes at once so that only one scene can be displayed
+        /// </summary>
         private void hideAllScenes()
         {
             foreach (GameScene item in Components)
@@ -59,7 +76,7 @@ namespace IJFinalProject
         /// </summary>
         protected override void LoadContent()
         {
-            
+
             Shared.stage = new Vector2(graphics.PreferredBackBufferWidth, graphics.PreferredBackBufferHeight);
             menuMusic = this.Content.Load<Song>("Sounds/JazzJingleBell");
             // Create a new SpriteBatch, which can be used to draw textures.
@@ -79,7 +96,10 @@ namespace IJFinalProject
             aboutScene = new AboutScene(this, spriteBatch);
             this.Components.Add(aboutScene);
 
-            //show only startScene
+            highScoreScene = new HighScoreScene(this, spriteBatch);
+            this.Components.Add(highScoreScene);
+
+            //show only menutScene
             menuScene.show();
             MediaPlayer.Play(menuMusic);
         }
@@ -101,10 +121,11 @@ namespace IJFinalProject
         protected override void Update(GameTime gameTime)
         {
 
-            // TODO: Add your update logic here
+            //index 0 = actionScene, 1 = helpScene, 3 = aboutScene, 4 = exit function 
             int selectedIndex = 0;
             KeyboardState ks = Keyboard.GetState();
-
+            
+            //This will make each scene visible/invisible and enabled/disabled
             if (menuScene.Enabled)
             {
                 selectedIndex = menuScene.Menu.SelectedIndex;
@@ -121,8 +142,12 @@ namespace IJFinalProject
                 if (selectedIndex == 1 && ks.IsKeyDown(Keys.Enter))
                 {
                     hideAllScenes();
-                    
                     helpScene.show();
+                }
+                if (selectedIndex == 2 && ks.IsKeyDown(Keys.Enter))
+                {
+                    hideAllScenes();
+                    highScoreScene.show();
                 }
                 if (selectedIndex == 3 && ks.IsKeyDown(Keys.Enter))
                 {
@@ -135,25 +160,30 @@ namespace IJFinalProject
                     this.Exit();
                 }
             }
+            //When a user entered one scene, if they press esc button, it will comeback to menu scene
             if (helpScene.Enabled)
             {
                 if (ks.IsKeyDown(Keys.Escape))
                 {
                     hideAllScenes();
-                    //or helpScene.hide();
                     menuScene.show();
                 }
-
             }
             if (aboutScene.Enabled)
             {
                 if (ks.IsKeyDown(Keys.Escape))
                 {
                     hideAllScenes();
-                    //or helpScene.hide();
                     menuScene.show();
                 }
-
+            }
+            if (highScoreScene.Enabled)
+            {
+                if (ks.IsKeyDown(Keys.Escape))
+                {
+                    hideAllScenes();
+                    menuScene.show();
+                }
             }
             if (actionScene.Enabled)
             {
@@ -161,7 +191,6 @@ namespace IJFinalProject
                 {
                     actionScene.StopGame();
                     hideAllScenes();
-                    actionScene.Initialize();
                     menuScene.show();
                     MediaPlayer.Play(menuMusic);
                 }
@@ -176,9 +205,6 @@ namespace IJFinalProject
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
-
-            // TODO: Add your drawing code here
-
             base.Draw(gameTime);
         }
     }

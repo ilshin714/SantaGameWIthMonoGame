@@ -1,8 +1,8 @@
-﻿/* Program: SantaGame
- * Purpose: Game Programming Final Project
- * 
- * Revision History: 
- *      Created by Ilshi Ji December 2020
+﻿/*  Program: IJFinalProject
+ *  Purpose: Game making for final project
+ *  Revision History: 
+ *      Created by Ilshin Ji December 1 2020
+ *      Modified by Ilshin Ji December 13 2020
  */
 
 using Microsoft.Xna.Framework;
@@ -16,8 +16,14 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using IJFinalProject.GameScenes;
 
+/// <summary>
+/// IJFIanl Project
+/// </summary>
 namespace IJFinalProject
 {
+    /// <summary>
+    /// Present class is the main class for getting score
+    /// </summary>
     class Present : DrawableGameComponent
     {
         //Variable Declaration 
@@ -48,8 +54,17 @@ namespace IJFinalProject
             get => presentSpeed;
             set => presentSpeed = value;
         }
-        
 
+        /// <summary>
+        /// Present Construction
+        /// </summary>
+        /// <param name="game">this game</param>
+        /// <param name="spriteBatch">this spriteBatch</param>
+        /// <param name="presentTexture">It diterminds a present's shape</param>
+        /// <param name="presentPosition">This position is randomly created from the actionScene</param>
+        /// <param name="presentSpeed">Default speed is 5, level 2 will be the twice of the speed</param>
+        /// <param name="stage">the game creen size</param>
+        /// <param name="effect">this will be realized next step</param>
         public Present(Game game,
             SpriteBatch spriteBatch,
             Texture2D presentTexture,
@@ -57,7 +72,6 @@ namespace IJFinalProject
             Vector2 presentSpeed,
             Vector2 stage,
             Texture2D effect
-            //more to come
             ) : base(game)
         {
             this.game = game;
@@ -69,18 +83,20 @@ namespace IJFinalProject
             positionY = (int)stage.Y;
             this.effect = effect;
 
-
             dimension = new Vector2(effect.Width / COL, effect.Height / ROW);
+            //I was going to make the effect for the present, but it will be realized next version
             CreateFrames();
+            //This will set point according to each present texture
             SetPoint();
-
-
         }
+
+        /// <summary>
+        /// The point of this present will vary according to its texture
+        /// </summary>
         private void SetPoint()
         {
             switch (presentTexture.Name)
             {
-
                 case "Images/present1":
                     this.point = 30;
                     break;
@@ -88,7 +104,7 @@ namespace IJFinalProject
                     this.point = 40;
                     break;
                 case "Images/present3":
-                    this.point = 50 ;
+                    this.point = 50;
                     break;
                 case "Images/present4":
                     this.point = 40;
@@ -97,18 +113,20 @@ namespace IJFinalProject
                     this.point = 50;
                     break;
                 case "Images/cane1":
-                    this.point = -30;
+                    this.point = -50;
                     break;
                 case "Images/umbrella1":
-                    this.point = -40;
+                    this.point = -60;
                     break;
                 default:
                     this.point = 0;
                     break;
-
             }
         }
 
+        /// <summary>
+        /// This will be realized for the next version
+        /// </summary>
         private void CreateFrames()
         {
             frames = new List<Rectangle>();
@@ -125,22 +143,29 @@ namespace IJFinalProject
             }
         }
 
+        /// <summary>
+        /// Draw function for present 
+        /// </summary>
+        /// <param name="gameTime">Provides a snapshot of timing values</param>
         public override void Draw(GameTime gameTime)
         {
             spriteBatch.Begin();
             spriteBatch.Draw(presentTexture, presentPositionOri, Color.White);
-            
+            //This will be realized for the next version
             if (frameIndex >= 0)
             {
                 //Version #4
                 spriteBatch.Draw(effect, presentPositionOri, frames[frameIndex], Color.White);
             }
-            
             spriteBatch.End();
 
             base.Draw(gameTime);
         }
 
+        /// <summary>
+        /// It will update the position of the moving present
+        /// </summary>
+        /// <param name="gameTime">Provides a snapshot of timing values</param>
         public override void Update(GameTime gameTime)
         {
 
@@ -148,9 +173,9 @@ namespace IJFinalProject
             positionX = (int)presentPositionOri.X;
             positionY = (int)presentPositionOri.Y;
 
-
-             if (positionY >= Shared.stage.Y - presentTexture.Height)
-             {
+            //This will be realized for the next version
+            if (positionY >= Shared.stage.Y - presentTexture.Height)
+            {
                 delayCounter++;
                 if (delayCounter > delay)
                 {
@@ -161,13 +186,15 @@ namespace IJFinalProject
                     }
                     delayCounter = 0;
                 }
-
             }
-
-
             base.Update(gameTime);
         }
 
+        /// <summary>
+        /// It will take the object's size so that collision manager can calculate if the santa and 
+        /// this object intersect or not 
+        /// </summary>
+        /// <returns>a rectangle position of the object</returns>
         public Rectangle getBound()
         {
             return new Rectangle(positionX, positionY, presentTexture.Width, presentTexture.Height);

@@ -1,5 +1,13 @@
-﻿using System;
-
+﻿/*  Program: IJFinalProject
+ *  Purpose: Game making for final project
+ *  Revision History: 
+ *      Created by Ilshin Ji December 1 2020
+ *      Modified by Ilshin Ji December 13 2020
+ */
+using System;
+/// <summary>
+/// project
+/// </summary>
 namespace IJFinalProject
 {
 #if WINDOWS || LINUX

@@ -1,4 +1,10 @@
-﻿using Microsoft.Xna.Framework;
+﻿/*  Program: IJFinalProject
+ *  Purpose: Game making for final project
+ *  Revision History: 
+ *      Created by Ilshin Ji December 1 2020
+ *      Modified by Ilshin Ji December 13 2020
+ */
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System;
@@ -7,10 +13,17 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+/// <summary>
+/// IJFinalProject
+/// </summary>
 namespace IJFinalProject
 {
+    /// <summary>
+    /// Menu Component class
+    /// </summary>
     class MenuComponent : DrawableGameComponent
     {
+        //Variables
         Game game;
         private SpriteBatch spriteBatch;
         private SpriteFont regularFont, highlightFont;
@@ -24,6 +37,14 @@ namespace IJFinalProject
 
         KeyboardState oldState;
 
+        /// <summary>
+        /// It will define menucomponents' characteristics and draw them on the menu scene
+        /// </summary>
+        /// <param name="game">this game</param>
+        /// <param name="spriteBatch">this spriteBatch</param>
+        /// <param name="regularFont">font for regular status</param>
+        /// <param name="highlightFont">font for highlitened status</param>
+        /// <param name="menus">it has strings to display</param>
         public MenuComponent(Game game,
             SpriteBatch spriteBatch,
             SpriteFont regularFont,
@@ -38,11 +59,18 @@ namespace IJFinalProject
             position = new Vector2(Shared.stage.X / 3, Shared.stage.Y / 3);
 
         }
+
+        /// <summary>
+        /// It will draw menu component
+        /// </summary>
+        /// <param name="gameTime">Provides a snapshot of timing values</param>
         public override void Draw(GameTime gameTime)
         {
             Vector2 tempPostion = position;
             spriteBatch.Begin();
 
+            //It wil loop through the menu array and display all
+            //and it will get the selectedIndex and change the menu component to be highlighted
             for (int i = 0; i < menuItems.Count; i++)
             {
                 if (selectedIndex == i)
@@ -61,6 +89,10 @@ namespace IJFinalProject
             base.Draw(gameTime);
         }
 
+        /// <summary>
+        /// According to the keyboard up and down event, it will change the selected index
+        /// </summary>
+        /// <param name="gameTime">Provides a snapshot of timing values</param>
         public override void Update(GameTime gameTime)
         {
             KeyboardState ks = Keyboard.GetState();
